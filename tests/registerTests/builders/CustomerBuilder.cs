@@ -15,9 +15,9 @@ namespace registerTests.builders
         public CustomerViewModel BuildCustomer()
         {
             return new CustomerBuilder()
-                        .FirstName("Anthue")
-                        .LastName("Eccel")
-                        .Birthdate(DateTime.Parse("1979-04-21"))
+                        .FirstName("John")
+                        .LastName("Doe")
+                        .Birthdate(DateTime.Parse("2000-04-21"))
                         .Gender(GenderType.Male)
                         .Build();
         }

@@ -9,16 +9,16 @@ namespace registerTests.domainTests
     public class CustomerEntityTests
     {
 
-        [Fact(DisplayName = "Verifys Costumer object to entity")]
+        [Fact(DisplayName = "Validate object to Costumer entity")]
         [Trait("Entity", "Customer")]
         public void should_create_Costumer()
         {
             var costumerExpected = new
             {
                 Id = Guid.NewGuid(),
-                FirstName = "Anthue",
-                LastName = "Eccel",
-                BirthDate = Convert.ToDateTime("1979-04-21"),
+                FirstName = "John",
+                LastName = "Doe",
+                BirthDate = Convert.ToDateTime("2000-04-21"),
                 Gender = GenderType.Male
             };
 

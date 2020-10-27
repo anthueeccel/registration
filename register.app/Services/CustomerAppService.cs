@@ -3,23 +3,24 @@ using register.app.Interfaces;
 using register.app.ViewModels;
 using register.domain.Commands;
 using register.domain.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace register.app.Services
 {
-    public class CustomerAppService : ICustomerAppService
+    public class CustomerAppService : AppServiceBase, ICustomerAppService
     {
         private readonly IMapper _mapper;
         private readonly ICustomerRepository _repository;
-        private readonly IMediatorHandler _mediatorHandler;
 
         public CustomerAppService(ICustomerRepository repository,
                                   IMapper mapper,
-                                  IMediatorHandler mediatorHandler)
+                                  IMediatorHandler mediatorHandler) 
+            :base(mediatorHandler)
+
         {
             _repository = repository;
             _mapper = mapper;
-            _mediatorHandler = mediatorHandler;
         }
 
         public async Task AddAsync(CustomerViewModel customerViewModel)
@@ -28,6 +29,12 @@ namespace register.app.Services
                                                  customerViewModel.LastName,
                                                  customerViewModel.BirthDate,
                                                  customerViewModel.Gender);
+
+            if (!command.IsValid())
+            {
+                await RaiseCommandValidationErrors(command);
+                return;
+            }
 
             await _mediatorHandler.SendCommand(command);
         }
