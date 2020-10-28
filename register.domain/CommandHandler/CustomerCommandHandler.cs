@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace register.domain.CommandHandler
 {
-    public class CustomerCommandHandler : IRequestHandler<AddCustomerCommand, Unit>
+    public class CustomerCommandHandler : IRequestHandler<AddCustomerCommand, Unit>,
+                                          IRequestHandler<UpdateCustomerCommand, Unit>
     {
         private readonly ICustomerRepository _repository;
 
@@ -25,6 +26,18 @@ namespace register.domain.CommandHandler
                              request.LastName,
                              request.BirthDate,
                              request.Gender.Value));
+
+            return Unit.Value;
+        }
+
+        public async Task<Unit> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+        {
+            _repository.Add(
+               new Customer(request.Id,
+                            request.FirstName,
+                            request.LastName,
+                            request.BirthDate,
+                            request.Gender.Value));
 
             return Unit.Value;
         }
