@@ -31,7 +31,8 @@ namespace register.Api
 
             //Domain - Commands
             services.AddScoped<IRequestHandler<AddCustomerCommand, Unit>, CustomerCommandHandler>();
-           
+            services.AddScoped<IRequestHandler<UpdateCustomerCommand, Unit>, CustomerCommandHandler>();
+            
             //Infra - Data
             services.AddScoped<ICustomerRepository, CustomerRepository>();
         }

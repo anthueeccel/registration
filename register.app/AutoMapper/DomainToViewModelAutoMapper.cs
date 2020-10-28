@@ -8,7 +8,7 @@ namespace register.app.AutoMapper
     {
         public DomainToViewModelAutoMapper()
         {
-            CreateMap<Customer, CustomerViewModel>();
+            CreateMap<Customer, CustomerViewModel>().ReverseMap();
         }
     }
 }
