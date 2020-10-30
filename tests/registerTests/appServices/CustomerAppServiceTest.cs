@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentAssertions;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using register.app.AutoMapper;
@@ -41,14 +40,14 @@ namespace registerTests.appServices
 
         [Fact(DisplayName = "Should Add Customer")]
         public async Task should_add_Costumer()
-        {            
+        {
             var model = new CustomerBuilder().BuildCustomer();
 
             var command = new AddCustomerCommand(model.FirstName,
                                                  model.LastName,
                                                  model.BirthDate,
                                                  model.Gender);
-            
+
             await _appService.AddAsync(model);
 
             await _mediatorHandler
@@ -73,11 +72,11 @@ namespace registerTests.appServices
                                                  model.Gender);
 
             await _appService.AddAsync(model);
-            
+
             await _mediatorHandler
                 .Received(1)
-                .PublishDomainNotification(Arg.Is<DomainNotification>(dn => 
-                    dn.Value == "Sorry, first name can't be empty."));                
+                .PublishDomainNotification(Arg.Is<DomainNotification>(dn =>
+                    dn.Value == "Sorry, first name can't be empty."));
         }
 
         [Fact(DisplayName = "Should fail Add Customer (no BirthDate)")]
@@ -96,7 +95,7 @@ namespace registerTests.appServices
 
             await _mediatorHandler
                 .Received(1)
-                .PublishDomainNotification(Arg.Is<DomainNotification>(dn => 
+                .PublishDomainNotification(Arg.Is<DomainNotification>(dn =>
                     dn.Value == "Sorry, the birth date can't be empty."));
         }
 
@@ -116,7 +115,7 @@ namespace registerTests.appServices
 
             await _mediatorHandler
                 .Received(1)
-                .PublishDomainNotification(Arg.Is<DomainNotification>(dn => 
+                .PublishDomainNotification(Arg.Is<DomainNotification>(dn =>
                     dn.Value == "Sorry, the Gender informed is invalid."));
         }
 
@@ -143,7 +142,7 @@ namespace registerTests.appServices
                                                              && d.FirstName == model.FirstName
                                                              && d.LastName == model.LastName
                                                              && d.BirthDate == model.BirthDate
-                                                             && d.Gender == model.Gender));            
+                                                             && d.Gender == model.Gender));
         }
 
         [Fact(DisplayName = "Should fail Update Customer (no Id)")]
@@ -189,7 +188,7 @@ namespace registerTests.appServices
 
             await _mediatorHandler
                 .Received(1)
-                .PublishDomainNotification(Arg.Is<DomainNotification>(dn => 
+                .PublishDomainNotification(Arg.Is<DomainNotification>(dn =>
                     dn.Value == "Sorry, first name can't be empty."));
         }
 
@@ -261,6 +260,56 @@ namespace registerTests.appServices
                 .Received(1)
                 .PublishDomainNotification(Arg.Is<DomainNotification>(dn =>
                     dn.Value == "Customer not found."));
+        }
+
+        [Fact(DisplayName = "Should Remove Customer")]
+        public async Task should_remove_Costumer()
+        {
+            var model = new CustomerBuilder().BuildCustomer();
+            model.Id = Guid.NewGuid();
+
+            var command = new RemoveCustomerCommand(model.Id);
+
+            _repository.GetById(model.Id).Returns(_mapper.Map<Customer>(model));
+
+            await _appService.RemoveAsync(model.Id);
+
+            await _mediatorHandler
+                .Received(1)
+                .SendCommand(Arg.Is<RemoveCustomerCommand>(d => d.Id == model.Id));
+
+        }
+
+        [Fact(DisplayName = "Should fail Remove Customer (empty Id)")]
+        public async Task should_fail_remove_Costumer_empty_Id()
+        {
+            var model = new CustomerBuilder().BuildCustomer();
+            model.Id = Guid.Empty;
+
+            var command = new RemoveCustomerCommand(model.Id);
+
+            await _appService.RemoveAsync(model.Id);
+
+            await _mediatorHandler
+                .Received(1)
+                .PublishDomainNotification(Arg.Is<DomainNotification>(dn => dn.Value == "Please, must inform the Id."));
+        }
+
+        [Fact(DisplayName = "Should fail Remove Customer (not found)")]
+        public async Task should_fail_remove_Costumer_not_found()
+        {
+            var model = new CustomerBuilder().BuildCustomer();
+            model.Id = Guid.NewGuid();
+
+            var command = new RemoveCustomerCommand(model.Id);
+
+            _repository.GetById(model.Id).ReturnsNull();            
+
+            await _appService.RemoveAsync(model.Id);
+
+            await _mediatorHandler
+                .Received(1)
+                .PublishDomainNotification(Arg.Is<DomainNotification>(dn => dn.Value == "Customer not found."));
         }
     }
 }

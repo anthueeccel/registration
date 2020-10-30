@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace register.domain.CommandHandler
 {
     public class CustomerCommandHandler : IRequestHandler<AddCustomerCommand, Unit>,
-                                          IRequestHandler<UpdateCustomerCommand, Unit>
+                                          IRequestHandler<UpdateCustomerCommand, Unit>,
+                                          IRequestHandler<RemoveCustomerCommand, Unit>
     {
         private readonly ICustomerRepository _repository;
 
@@ -38,6 +39,13 @@ namespace register.domain.CommandHandler
                             request.LastName,
                             request.BirthDate,
                             request.Gender.Value));
+            
+            return Unit.Value;
+        }
+
+        public async Task<Unit> Handle(RemoveCustomerCommand request, CancellationToken cancellationToken)
+        {
+            _repository.Remove(request.Id);
 
             return Unit.Value;
         }

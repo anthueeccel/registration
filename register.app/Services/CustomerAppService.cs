@@ -59,6 +59,7 @@ namespace register.app.Services
             if (dbEnity == null)
             {
                 await _mediatorHandler.PublishDomainNotification(new DomainNotification("Customer not found."));
+                return;
             }
 
             await _mediatorHandler.SendCommand(command);
@@ -67,6 +68,26 @@ namespace register.app.Services
         public Customer GetById(Guid id)
         {
             return _repository.GetById(id);
+        }
+
+        public async Task RemoveAsync(Guid id)
+        {
+            var command = new RemoveCustomerCommand(id);
+
+            if (!command.IsValid())
+            {
+                await RaiseCommandValidationErrors(command);
+                return;
+            }
+
+            var dbEntity = GetById(id);
+            if (dbEntity == null)
+            {
+                await _mediatorHandler.PublishDomainNotification(new DomainNotification("Customer not found."));
+                return;
+            }
+
+            await _mediatorHandler.SendCommand(command);
         }
     }
 }
