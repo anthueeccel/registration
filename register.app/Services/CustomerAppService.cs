@@ -6,6 +6,7 @@ using register.domain.Entities;
 using register.domain.Interfaces;
 using register.domain.Messaging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace register.app.Services
@@ -29,7 +30,7 @@ namespace register.app.Services
         {
             var command = new AddCustomerCommand(customerViewModel.FirstName,
                                                  customerViewModel.LastName,
-                                                 customerViewModel.BirthDate,
+                                                 customerViewModel.Birthdate,
                                                  customerViewModel.Gender);
 
             if (!command.IsValid())
@@ -46,7 +47,7 @@ namespace register.app.Services
             var command = new UpdateCustomerCommand(customerViewModel.Id,
                                                     customerViewModel.FirstName,
                                                     customerViewModel.LastName,
-                                                    customerViewModel.BirthDate,
+                                                    customerViewModel.Birthdate,
                                                     customerViewModel.Gender);
 
             if (!command.IsValid())
@@ -88,6 +89,11 @@ namespace register.app.Services
             }
 
             await _mediatorHandler.SendCommand(command);
+        }
+
+        public IEnumerable<Customer> GetAll()
+        {
+            return _repository.GetAll();            
         }
     }
 }
