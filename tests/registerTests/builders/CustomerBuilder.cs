@@ -29,7 +29,7 @@ namespace registerTests.builders
                 Id = _id,
                 FirstName = _firstName,
                 LastName = _lastName,
-                BirthDate = _birthDate,
+                Birthdate = _birthDate,
                 Gender = _gender
             };
         }

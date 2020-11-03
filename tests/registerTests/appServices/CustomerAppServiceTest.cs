@@ -45,7 +45,7 @@ namespace registerTests.appServices
 
             var command = new AddCustomerCommand(model.FirstName,
                                                  model.LastName,
-                                                 model.BirthDate,
+                                                 model.Birthdate,
                                                  model.Gender);
 
             await _appService.AddAsync(model);
@@ -54,7 +54,7 @@ namespace registerTests.appServices
                 .Received(1)
                 .SendCommand(Arg.Is<AddCustomerCommand>(d => d.FirstName == model.FirstName
                                                           && d.LastName == model.LastName
-                                                          && d.BirthDate == model.BirthDate
+                                                          && d.BirthDate == model.Birthdate
                                                           && d.Gender == model.Gender));
 
         }
@@ -68,7 +68,7 @@ namespace registerTests.appServices
 
             var command = new AddCustomerCommand(model.FirstName,
                                                  model.LastName,
-                                                 model.BirthDate,
+                                                 model.Birthdate,
                                                  model.Gender);
 
             await _appService.AddAsync(model);
@@ -84,11 +84,11 @@ namespace registerTests.appServices
         {
             var model = new CustomerBuilder().BuildCustomer();
 
-            model.BirthDate = default;
+            model.Birthdate = default;
 
             var command = new AddCustomerCommand(model.FirstName,
                                                  model.LastName,
-                                                 model.BirthDate,
+                                                 model.Birthdate,
                                                  model.Gender);
 
             await _appService.AddAsync(model);
@@ -108,7 +108,7 @@ namespace registerTests.appServices
 
             var command = new AddCustomerCommand(model.FirstName,
                                                  model.LastName,
-                                                 model.BirthDate,
+                                                 model.Birthdate,
                                                  model.Gender);
 
             await _appService.AddAsync(model);
@@ -128,7 +128,7 @@ namespace registerTests.appServices
             var command = new UpdateCustomerCommand(model.Id,
                                                     model.FirstName,
                                                     model.LastName,
-                                                    model.BirthDate,
+                                                    model.Birthdate,
                                                     model.Gender);
 
             var dbEntity = _mapper.Map<Customer>(model);
@@ -141,7 +141,7 @@ namespace registerTests.appServices
                 .SendCommand(Arg.Is<UpdateCustomerCommand>(d => d.Id == model.Id
                                                              && d.FirstName == model.FirstName
                                                              && d.LastName == model.LastName
-                                                             && d.BirthDate == model.BirthDate
+                                                             && d.BirthDate == model.Birthdate
                                                              && d.Gender == model.Gender));
         }
 
@@ -154,7 +154,7 @@ namespace registerTests.appServices
             var command = new UpdateCustomerCommand(model.Id,
                                                     model.FirstName,
                                                     model.LastName,
-                                                    model.BirthDate,
+                                                    model.Birthdate,
                                                     model.Gender);
 
             var dbEntity = _mapper.Map<Customer>(model);
@@ -178,7 +178,7 @@ namespace registerTests.appServices
             var command = new UpdateCustomerCommand(model.Id,
                                                     model.FirstName,
                                                     model.LastName,
-                                                    model.BirthDate,
+                                                    model.Birthdate,
                                                     model.Gender);
 
             var dbEntity = _mapper.Map<Customer>(model);
@@ -197,12 +197,12 @@ namespace registerTests.appServices
         {
             var model = new CustomerBuilder().BuildCustomer();
             model.Id = Guid.NewGuid();
-            model.BirthDate = default;
+            model.Birthdate = default;
 
             var command = new UpdateCustomerCommand(model.Id,
                                                     model.FirstName,
                                                     model.LastName,
-                                                    model.BirthDate,
+                                                    model.Birthdate,
                                                     model.Gender);
 
             var dbEntity = _mapper.Map<Customer>(model);
@@ -226,7 +226,7 @@ namespace registerTests.appServices
             var command = new UpdateCustomerCommand(model.Id,
                                                     model.FirstName,
                                                     model.LastName,
-                                                    model.BirthDate,
+                                                    model.Birthdate,
                                                     model.Gender);
 
             var dbEntity = _mapper.Map<Customer>(model);
@@ -249,7 +249,7 @@ namespace registerTests.appServices
             var command = new UpdateCustomerCommand(model.Id,
                                                     model.FirstName,
                                                     model.LastName,
-                                                    model.BirthDate,
+                                                    model.Birthdate,
                                                     model.Gender);
 
             _repository.GetById(model.Id).ReturnsNull();
