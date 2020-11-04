@@ -1,10 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using register.domain.Entities;
+﻿using register.domain.Entities;
 using register.domain.Interfaces;
 using register.infra.data.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace register.infra.data.Repositories
 {
@@ -14,37 +10,5 @@ namespace register.infra.data.Repositories
         {
             _context = context;
         }
-
-        public void Add(Customer customer)
-        {
-            _context.Add(customer);
-            _context.SaveChanges();
-        }
-
-        public IEnumerable<Customer> GetAll()
-        {
-            return Query();
-        }
-
-        public Customer GetById(Guid id)
-        {
-            return _context.Customer.AsNoTracking().FirstOrDefault(x => x.Id == id);
-        }
-
-        public void Remove(Customer customer)
-        {
-            customer.DeleteDate = DateTime.Now;
-
-            _context.Customer.Update(customer);
-            _context.SaveChanges();
-        }
-
-        public void Update(Customer customer)
-        {
-            _context.Customer.Update(customer);
-            _context.SaveChanges();
-        }
-
-
     }
 }

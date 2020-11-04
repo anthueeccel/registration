@@ -95,7 +95,7 @@ namespace register.app.Services
 
         public IEnumerable<Customer> GetAll()
         {
-            return _repository.GetAll();            
+            return _repository.Query();            
         }
     }
 }

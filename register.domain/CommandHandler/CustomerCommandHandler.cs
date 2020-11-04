@@ -33,7 +33,8 @@ namespace register.domain.CommandHandler
 
         public async Task<Unit> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            _repository.Add(
+            
+            _repository.Update(
                new Customer(request.Id,
                             request.FirstName,
                             request.LastName,
