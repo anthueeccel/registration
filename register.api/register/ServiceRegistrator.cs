@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using register.app.AutoMapper;
@@ -10,6 +11,7 @@ using register.domain.Commands;
 using register.domain.Interfaces;
 using register.domain.Mediator;
 using register.domain.Messaging;
+using register.infra.data.Context;
 using register.infra.data.Repositories;
 
 namespace register.Api
@@ -36,6 +38,11 @@ namespace register.Api
 
             //Infra - Data
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<RegisterDbContext>();
+
+            var x = configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<RegisterDbContext>(options =>
+                options.UseSqlServer(x));
         }
     }
 }

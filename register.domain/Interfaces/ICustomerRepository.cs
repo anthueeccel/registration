@@ -6,10 +6,10 @@ namespace register.domain.Interfaces
 {
     public interface ICustomerRepository
     {
-        void Add(Customer costumer);
+        void Add(Customer customer);
         Customer GetById(Guid id);
         List<Customer> GetAll();
-        void Remove(Guid id);
+        void Remove(Customer customer);
         void Update(Customer customer);
     }
 }

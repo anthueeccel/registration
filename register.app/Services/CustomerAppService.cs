@@ -88,6 +88,8 @@ namespace register.app.Services
                 return;
             }
 
+            command.DbEntity = dbEntity;
+
             await _mediatorHandler.SendCommand(command);
         }
 

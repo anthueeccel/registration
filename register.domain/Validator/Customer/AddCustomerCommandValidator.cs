@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using register.domain.Commands;
+using register.domain.Enum;
 using System;
 
 namespace register.domain.Validator
@@ -14,6 +15,7 @@ namespace register.domain.Validator
                 .NotEqual(DateTime.MinValue).WithMessage("Sorry, the birth date can't be empty.")
                 .Must(Validators.IsDateValid).WithMessage("Sorry, the birthdate informed is invalid.");
             RuleFor(c => c.Gender)
+                .NotEqual((GenderType)0).WithMessage("Must inform a valid gender.")
                 .IsInEnum().WithMessage("Sorry, the Gender informed is invalid.").When(v => v.Gender != null);
         }
     }

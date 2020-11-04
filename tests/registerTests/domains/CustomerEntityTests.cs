@@ -27,7 +27,7 @@ namespace registerTests.domainTests
             costumer.Id.Should().Be(costumerExpected.Id);
             costumer.FirstName.Should().Be(costumerExpected.FirstName);
             costumer.LastName.Should().Be(costumerExpected.LastName);
-            costumer.Birthate.Should().Be(costumerExpected.BirthDate);
+            costumer.Birthdate.Should().Be(costumerExpected.BirthDate);
         }
     }
 }

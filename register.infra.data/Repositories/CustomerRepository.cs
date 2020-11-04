@@ -1,43 +1,50 @@
-﻿using register.domain.Entities;
-using register.domain.Enum;
+﻿using Microsoft.EntityFrameworkCore;
+using register.domain.Entities;
 using register.domain.Interfaces;
+using register.infra.data.Context;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace register.infra.data.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public void Add(Customer costumer)
+        protected readonly RegisterDbContext _context;
+
+        public CustomerRepository(RegisterDbContext context)
         {
-            //TODO: add to database 
+            _context = context;
+        }
+
+        public void Add(Customer customer)
+        {
+            _context.Add(customer);
+            _context.SaveChanges();
         }
 
         public List<Customer> GetAll()
         {
-            //for development
-            return new List<Customer>
-            {
-                (new Customer(Guid.Parse("1ed5e347-bd10-411f-89fc-fe7a13149087"), "John", "Stout", DateTime.Parse("2000-04-21"), GenderType.Male)),
-                (new Customer(Guid.Parse("1ed5e347-bd10-411f-89fc-fe7a13149088"), "Mary", "Dunkel", DateTime.Parse("2005-02-12"), GenderType.Female)),
-                (new Customer(Guid.Parse("1ed5e347-bd10-411f-89fc-fe7a13149089"), "Jane", "Pilsen", DateTime.Parse("2000-11-02"), GenderType.Male))
-            };
+            return _context.Customer.AsNoTracking().ToList();
         }
 
         public Customer GetById(Guid id)
         {
-            //for development
-            return new Customer(Guid.Parse("1ed5e347-bd10-411f-89fc-fe7a13149087"), "John", "Doe", DateTime.Parse("2000-04-21"), GenderType.Male);
+            return _context.Customer.AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
-        public void Remove(Guid id)
+        public void Remove(Customer customer)
         {
-            //TODO: remove from database
+            customer.DeleteDate = DateTime.Now;
+
+            _context.Customer.Update(customer);
+            _context.SaveChanges();
         }
 
         public void Update(Customer customer)
         {
-            //TODO update on database
+            _context.Customer.Update(customer);
+            _context.SaveChanges();
         }
     }
 }
