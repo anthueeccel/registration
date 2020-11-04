@@ -8,6 +8,7 @@ namespace register.domain.Commands
 {
     public class AddCustomerCommand : Command
     {
+        protected Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
@@ -15,6 +16,7 @@ namespace register.domain.Commands
 
         public AddCustomerCommand(string firstName, string lastName, DateTime birthDate, GenderType gender)
         {
+            Id = Guid.NewGuid();
             FirstName = firstName;
             LastName = lastName;
             BirthDate = birthDate;

@@ -45,7 +45,7 @@ namespace register.domain.CommandHandler
 
         public async Task<Unit> Handle(RemoveCustomerCommand request, CancellationToken cancellationToken)
         {
-            _repository.Remove(request.Id);
+            _repository.Remove(request.DbEntity);
 
             return Unit.Value;
         }
