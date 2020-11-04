@@ -27,6 +27,14 @@ namespace register.Api.Controllers
 
             return CustomResponse();
         }
+        
+        [HttpPut]
+        public async Task<IActionResult> Update(CustomerViewModel customerViewModel)
+        {
+            await _appService.UpdateAsync(customerViewModel);
+
+            return CustomResponse();
+        }
 
         [HttpGet]
         public IEnumerable<Customer> GetAll()
