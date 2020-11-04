@@ -8,10 +8,8 @@ using System.Linq;
 
 namespace register.infra.data.Repositories
 {
-    public class CustomerRepository : ICustomerRepository
+    public class CustomerRepository : Repository<Customer>, ICustomerRepository
     {
-        protected readonly RegisterDbContext _context;
-
         public CustomerRepository(RegisterDbContext context)
         {
             _context = context;
@@ -23,9 +21,9 @@ namespace register.infra.data.Repositories
             _context.SaveChanges();
         }
 
-        public List<Customer> GetAll()
+        public IEnumerable<Customer> GetAll()
         {
-            return _context.Customer.AsNoTracking().ToList();
+            return Query();
         }
 
         public Customer GetById(Guid id)
@@ -46,5 +44,7 @@ namespace register.infra.data.Repositories
             _context.Customer.Update(customer);
             _context.SaveChanges();
         }
+
+
     }
 }
