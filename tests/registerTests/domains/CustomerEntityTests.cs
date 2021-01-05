@@ -13,6 +13,7 @@ namespace registerTests.domainTests
         [Trait("Entity", "Customer")]
         public void should_create_Costumer()
         {
+            //Arrange
             var costumerExpected = new
             {
                 Id = Guid.NewGuid(),
@@ -22,7 +23,10 @@ namespace registerTests.domainTests
                 Gender = GenderType.Male
             };
 
+            //Act
             var costumer = new Customer(costumerExpected.Id, costumerExpected.FirstName, costumerExpected.LastName, costumerExpected.BirthDate, costumerExpected.Gender);
+            
+            //Assert
             costumerExpected.Should().Equals(costumer);
             costumer.Id.Should().Be(costumerExpected.Id);
             costumer.FirstName.Should().Be(costumerExpected.FirstName);

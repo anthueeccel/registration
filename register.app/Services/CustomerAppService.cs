@@ -7,6 +7,7 @@ using register.domain.Interfaces;
 using register.domain.Messaging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace register.app.Services
@@ -36,6 +37,12 @@ namespace register.app.Services
             if (!command.IsValid())
             {
                 await RaiseCommandValidationErrors(command);
+                return;
+            }
+
+            if (_repository.Query().Any(c => c.FirstName == command.FirstName && c.Birthdate == command.BirthDate))
+            {
+                await _mediatorHandler.PublishDomainNotification(new DomainNotification("Customer already registered."));
                 return;
             }
 
@@ -95,7 +102,7 @@ namespace register.app.Services
 
         public IEnumerable<Customer> GetAll()
         {
-            return _repository.Query();            
+            return _repository.Query();
         }
     }
 }

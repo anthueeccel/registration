@@ -1,5 +1,4 @@
 ﻿using FluentValidation.Results;
-using register.domain.Entities;
 using register.domain.Enum;
 using register.domain.Validator;
 using System;
