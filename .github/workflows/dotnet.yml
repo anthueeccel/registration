@@ -17,6 +17,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
+        
+    - name: list
+      run: ls
     - name: Restore dependencies
       run: dotnet restore root/src/register.api
     - name: Build
