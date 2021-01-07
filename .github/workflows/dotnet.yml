@@ -21,8 +21,8 @@ jobs:
     - name: list
       run: ls
     - name: Restore dependencies
-      run: dotnet restore root/src/register.api
+      run: dotnet restore register.api
     - name: Build
-      run: dotnet build --no-restore root/src/register.api
+      run: dotnet build --no-restore register.api
     - name: Test
-      run: dotnet test --no-build --verbosity normal root/src/register.api
+      run: dotnet test --no-build --verbosity normal register.api
