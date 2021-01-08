@@ -7,3 +7,5 @@ Other libraries: MediatR, AutoMapper
 Database: SQL Server, onCreating to load Db with some data.
 
 Tests using XUnit framework and NSubstitute library.
+
+*Github action to restore, build and run tests (workflow/dotnet.yml)
