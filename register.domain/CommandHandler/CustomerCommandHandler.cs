@@ -27,8 +27,8 @@ namespace register.domain.CommandHandler
                              request.LastName,
                              request.BirthDate,
                              request.Gender.Value));
-
-            return Unit.Value;
+            
+            return Unit.Value;        
         }
 
         public async Task<Unit> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
