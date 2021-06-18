@@ -115,7 +115,7 @@ namespace registerTests.appServices
             //Arrange
             var model = new CustomerBuilder().BuildCustomer();
 
-            model.Gender = GenderType.Female;
+            model.Gender = (GenderType)6;
 
             var command = new AddCustomerCommand(model.FirstName,
                                                  model.LastName,
