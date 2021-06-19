@@ -1,1 +1,24 @@
-<p>customer-list works!</p>
+<div class="container">
+    <table class="tables">
+        <thead class="tables__headers">
+            <th class="tables__headers__contents">Name</th>
+            <th class="tables__headers__contents">Last Name</th>
+            <th class="tables__headers__contents">Birthdate</th>
+            <th class="tables__headers__contents">Gender</th>
+        </thead>
+        <tbody *ngIf="customers.length > 0; else emptyList">
+            <tr class="tables__lines" *ngFor="let customer of customers">
+                <td class="tables__contents">{{ customer?.firstName }}</td>
+                <td class="tables__contents">{{ customer?.lastName }}</td>
+                <td class="tables__contents">{{ customer?.birthdate | date }}</td>
+                <td class="tables__contents">{{ customer?.gender }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="buttons-wrapper">
+        <button class="buttons" type="button" (click)="getAll()">GetAll</button>
+    </div>
+    <ng-template #emptyList>
+        <p>No data available</p>
+    </ng-template>
+</div>

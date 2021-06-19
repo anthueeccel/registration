@@ -1,4 +1,8 @@
+import { getAllLifecycleHooks } from '@angular/compiler/src/lifecycle_reflector';
 import { Component, OnInit } from '@angular/core';
+import { UrlHandlingStrategy } from '@angular/router';
+import { Customer } from 'src/app/models/customer.model';
+import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
   selector: 'app-customer-list',
@@ -7,9 +11,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomerListComponent implements OnInit {
 
-  constructor() { }
+  public customers: Customer[];
 
-  ngOnInit(): void {
+  constructor(private service: CustomerService) {
+    this.customers = [];
   }
 
+  ngOnInit(): void {
+    this.getAll();
+  }
+
+  public getAll(): any {
+    this.service.getAll().subscribe((customers: Customer[]) => {
+      console.log(customers);
+      this.customers = customers;
+    });
+  }
 }
