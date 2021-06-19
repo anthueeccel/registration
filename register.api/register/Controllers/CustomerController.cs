@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using register.app.Interfaces;
 using register.app.ViewModels;
@@ -27,7 +28,7 @@ namespace register.Api.Controllers
 
             return CustomResponse();
         }
-        
+
         [HttpPut]
         public async Task<IActionResult> Update(CustomerViewModel customerViewModel)
         {
@@ -35,7 +36,7 @@ namespace register.Api.Controllers
 
             return CustomResponse();
         }
-
+                
         [HttpGet]
         public IEnumerable<Customer> GetAll()
         {

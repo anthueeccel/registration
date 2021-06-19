@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using register.domain.Messaging;
 
@@ -14,7 +15,7 @@ namespace register.Api.Controllers
         {
             _domainNotificationHandler = (DomainNotificationHandler)notificationHandler; ;
         }
-
+               
         protected IActionResult CustomResponse()
         {
             if (_domainNotificationHandler.HasNotification())
